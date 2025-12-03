@@ -13,24 +13,29 @@ dependencies = [
     "google-genai (>=1.51.0,<2.0.0)",
     "pandas (>=2.0.0)",
     "openpyxl (>=3.1.0)",
-    "python-dotenv (>=1.0.0)"
+    "python-dotenv (>=1.0.0)",
+    "fastapi (>=0.123.5,<0.124.0)",
+    "uvicorn (>=0.38.0,<0.39.0)",
+    "python-multipart (>=0.0.20,<0.0.21)"
 ]
 
 [project.scripts]
 amazon-content-generator = "main:main"
+api-server = "api_server:main"
 
 
 [tool.poetry]
 name = "amazon-seller-assistant"
 version = "0.1.0"
 description = "Amazon Content Generation Pipeline - Sequential Multi-Agent System (ADK-Based)"
-authors = ["Ming Zhang <zhangmingyang@example.com>"]
+authors = ["Mingyang Zhang <zhangmingyang@example.com>"]
 license = "MIT"
 readme = "README.md"
 packages = [{include = "src"}]
 
 [tool.poetry.scripts]
 amazon-content-generator = "main:main"
+api-server = "api_server:main"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
