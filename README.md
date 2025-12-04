@@ -33,12 +33,32 @@ poetry run python3 single_agent_main.py \
 
 **Output:** `output/single_agent_output.json`
 
+### 3. Web Interface (Optional)
+
+Use the web interface for a visual, user-friendly experience:
+
+```bash
+# Terminal 1: Start backend API
+poetry run api-server
+
+# Terminal 2: Start frontend
+cd frontend
+npm run dev
+```
+
+Then open http://localhost:5173 in your browser to:
+- Upload XLSX files via drag-and-drop
+- Configure parameters with visual forms
+- View beautifully formatted results
+- Download JSON output with one click
+
 ---
 
 ## 📋 Table of Contents
 
 - [Overview](#overview)
 - [Architecture Options](#architecture-options)
+- [Web Interface](#web-interface)
 - [Single Agent Usage](#single-agent-usage)
 - [Multi-Agent Pipeline](#multi-agent-pipeline)
 - [XLSX Data Processing](#xlsx-data-processing)
@@ -86,7 +106,9 @@ poetry run python3 single_agent_main.py --model gemini-2.5-flash-lite --top-n 30
 XLSX Files → XlsxProcessorTool → Single Agent → Complete Content
 ```
 
-### Multi-Agent Pipeline (🔧 Advanced)
+### Multi-Agent Pipeline (🔧 Advanced) - ⚠️ WIP
+
+> **Note:** The multi-agent system is currently a Work In Progress and may not be fully functional. We recommend using the Single Agent System for production use.
 
 **Best for:** Modular approach, step-by-step control, debugging
 
@@ -109,6 +131,139 @@ poetry run python3 main.py --model gemini-2.0-flash-exp
 5. QualityCheckAgent → Validates content
 6. ArgumentationAgent → Provides SEO rationale
 ```
+
+---
+
+## Web Interface
+
+### 🌐 Overview
+
+The web interface provides a beautiful, intuitive way to generate Amazon content without using the command line.
+
+**Features:**
+- 📤 Drag-and-drop XLSX file upload
+- 🎨 Modern gradient UI with responsive design
+- ⚙️ Visual parameter configuration
+- 📊 Real-time content generation
+- 🔍 Comprehensive result display
+- 💾 One-click JSON download
+- ✅ Form validation and error handling
+
+### Setup
+
+#### Prerequisites
+- Node.js 20+ (recommended) or 16+
+- npm 8+
+
+#### Installation
+
+```bash
+# Install frontend dependencies
+cd frontend
+npm install
+```
+
+#### Running the Web Interface
+
+**Terminal 1 - Backend API:**
+```bash
+# From project root
+poetry run api-server
+# Backend runs at http://localhost:8000
+```
+
+**Terminal 2 - Frontend:**
+```bash
+# From project root
+cd frontend
+npm run dev
+# Frontend runs at http://localhost:5173
+```
+
+#### Upgrading Node.js (if needed)
+
+If you have Node.js 16 or earlier:
+
+```bash
+# Using Homebrew (macOS)
+brew install node
+
+# Or using NVM
+nvm install --lts
+nvm use --lts
+```
+
+### Using the Web Interface
+
+1. **Open Browser**: Navigate to http://localhost:5173
+
+2. **Upload Files**:
+   - Click to select or drag-and-drop `seller_elf.xlsx`
+   - Click to select or drag-and-drop `sif.xlsx`
+
+3. **Configure Parameters**:
+   - **Brand Name**: Your brand (e.g., "Amazing Cosy")
+   - **Product Type**: Product category (required, e.g., "Women's Slippers")
+   - **Top N Keywords**: Number of keywords to use (default: 50)
+   - **AI Model**: Select from available Gemini models
+
+4. **Generate Content**: Click "Generate Content" button
+
+5. **View Results**: Browse through organized sections:
+   - Market Research
+   - 3 Title Variations
+   - Bullet Points (2 versions)
+   - Product Description
+   - Search Keywords
+   - Quality Check Scores
+   - SEO Rationale
+
+6. **Download**: Click "Download JSON" to save results
+
+### API Documentation
+
+The backend provides:
+- **Endpoint**: `POST /generate`
+- **Interactive Docs**: http://localhost:8000/docs
+- **Health Check**: http://localhost:8000/health
+
+### Frontend Development
+
+```bash
+# Start development server with hot reload
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+
+# Run linter
+npm run lint
+```
+
+### Troubleshooting Web Interface
+
+**Backend won't start:**
+- Check `.env` file has `GOOGLE_API_KEY`
+- Verify port 8000 is not in use
+- Run `poetry install` to ensure dependencies are installed
+
+**Frontend won't start:**
+- Check Node.js version: `node --version` (need 20+)
+- Delete `node_modules` and `package-lock.json`, then run `npm install`
+- Verify port 5173 is available
+
+**Can't connect to backend:**
+- Ensure backend is running on http://localhost:8000
+- Check browser console for CORS errors
+- Verify firewall isn't blocking connections
+
+**File upload fails:**
+- Ensure files are valid XLSX format
+- Check file sizes aren't too large
+- Verify files aren't corrupted
 
 ---
 
@@ -169,6 +324,8 @@ RECOMMENDATIONS:
 ---
 
 ## Multi-Agent Pipeline
+
+> ⚠️ **Work In Progress:** This multi-agent pipeline is currently under development and may not be fully functional. Please use the [Single Agent System](#single-agent-usage) for production workloads.
 
 ### Run the Pipeline
 
@@ -461,11 +618,19 @@ amazon-seller-assistant/
 │   │   └── xlsx_processor_tool.py     # Data processing
 │   └── config/
 │       └── settings.py                # Configuration
+├── frontend/                           # React web interface
+│   ├── src/
+│   │   ├── App.jsx                    # Main React component
+│   │   ├── App.css                    # Application styles
+│   │   └── main.jsx                   # Entry point
+│   ├── package.json                   # Frontend dependencies
+│   └── README.md                      # Frontend documentation
 ├── data/                               # Input XLSX files
 ├── output/                             # Generated content
 ├── tests/                              # Test suite
-├── single_agent_main.py               # Single agent entry point
-├── main.py                            # Multi-agent entry point
+├── api_server.py                      # FastAPI backend server
+├── single_agent_main.py               # Single agent CLI
+├── main.py                            # Multi-agent CLI
 ├── pyproject.toml                     # Poetry dependencies
 └── README.md                          # This file
 ```
@@ -511,8 +676,8 @@ def process_custom_data(file_path):
 
 ## Performance Comparison
 
-| Metric | Single Agent | Multi-Agent |
-|--------|--------------|-------------|
+| Metric | Single Agent | Multi-Agent (WIP) |
+|--------|--------------|-------------------|
 | **API Calls** | 1 | 6 |
 | **Execution Time** | 10-15 sec | 45-60 sec |
 | **Token Usage** | ~5,000 | ~20,000 |
@@ -520,8 +685,9 @@ def process_custom_data(file_path):
 | **Complexity** | Simple | Complex |
 | **Debugging** | Moderate | Easy |
 | **Modularity** | Low | High |
+| **Status** | ✅ Production Ready | ⚠️ WIP |
 
-**Recommendation:** Start with Single Agent for most use cases. Use Multi-Agent if you need fine-grained control or want to customize individual steps.
+**Recommendation:** Use the Single Agent system for all production use cases. The multi-agent pipeline is currently under development.
 
 ---
 
