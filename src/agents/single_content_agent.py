@@ -104,12 +104,18 @@ You must generate a complete JSON response with the following structure:
 
 REQUIREMENTS:
 
+CRITICAL CONTENT RULE: Throughout ALL generated content (titles, bullet points, description, keywords), you MUST:
+- ONLY use the brand name specified in the input data
+- NEVER mention, reference, or include competitor brand names
+- Competitor data is provided ONLY for market research context, NOT for inclusion in content
+
 1. TITLES (3 variations):
    - Maximum 200 characters each
    - Include brand name, product type, and top keywords
    - Optimize for Amazon search algorithm
    - Follow format: Brand + Product Type + Key Features + Keywords
    - Each variation should emphasize different keyword combinations
+   - CRITICAL: NEVER include competitor brand names - only use the specified brand name from input data
 
 2. BULLET POINTS (2 versions, 5 bullets each):
    - STRICT REQUIREMENT: Each bullet point MUST be between 150-200 characters (aim for 170-190 for optimal Amazon display)
@@ -119,6 +125,7 @@ REQUIREMENTS:
    - Add supporting details and specific benefits to reach the character requirement
    - Version 1: Feature-focused approach with detailed specifications
    - Version 2: Benefit-focused approach with emotional appeal and value propositions
+   - CRITICAL: NEVER mention or reference competitor brand names in bullet points
 
 3. PRODUCT DESCRIPTION:
    - STRICT REQUIREMENT: MUST be between 1500-1950 characters (NOT MORE than 1950, NOT LESS than 1500)
@@ -130,6 +137,7 @@ REQUIREMENTS:
    - Highlight unique selling points and value proposition
    - Include strong call-to-action
    - Be concise yet compelling - every sentence should drive value and conversion
+   - CRITICAL: NEVER mention or reference competitor brand names in the description
 
 4. SEARCH KEYWORDS:
    - STRICT REQUIREMENT: Total string length MUST be ≤250 characters (NOT more than 250!)
@@ -144,7 +152,7 @@ REQUIREMENTS:
 
 5. QUALITY CHECK:
    - Validate all content for grammar, spelling, and readability
-   - Ensure brand name consistency
+   - Ensure brand name consistency (ONLY the specified brand, NO competitor brands)
    - Check Amazon guidelines compliance (no promotional language, no claims without substantiation)
    - Verify keyword optimization (natural integration, no stuffing)
    - Assess overall content quality
@@ -152,6 +160,7 @@ REQUIREMENTS:
    - CRITICAL: Verify product description is 1500-1950 characters (flag if outside this range)
    - CRITICAL: Verify search keywords total length is ≤250 characters (flag if over)
    - CRITICAL: Check for keyword repetition between search_keywords and bullets/description
+   - CRITICAL: Verify NO competitor brand names appear anywhere in titles, bullets, description, or keywords
    - Provide scores out of 10 for each category
    - List any issues or recommendations
 
